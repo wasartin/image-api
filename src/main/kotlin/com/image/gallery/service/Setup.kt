@@ -18,7 +18,6 @@ class Setup(
     fun createImage(filePath: String): BufferedImage? {
         val imageFile = File(filePath)
         try {
-            var imgView : ImageView = ImageView(imageFile!!)
         } catch (e: Exception){
             logger.info("Couldn't process image, with file location = ${imageFile.absolutePath}")
             throw e
