@@ -19,9 +19,10 @@ class Utils(
         try {
         } catch (e: Exception){
             logger.info("Couldn't process image, with file location = ${imageFile.absolutePath}")
-            throw e
         }
         return null
     }
 
 }
+\
+
