@@ -1,4 +1,4 @@
-package com.image.gallery.service
+package com.image.gallery.utils
 
 
 import org.slf4j.Logger
@@ -8,10 +8,10 @@ import java.io.File
 import java.lang.Exception
 
 
-class Utils(
+class Transform(
     var directory: String
 ) {
-    var logger: Logger = LoggerFactory.getLogger(Utils::class.java)
+    var logger: Logger = LoggerFactory.getLogger(Transform::class.java)
     // Given a directory
     // Turn files into images.
     fun createImage(filePath: String): BufferedImage? {
@@ -24,5 +24,3 @@ class Utils(
     }
 
 }
-\
-
