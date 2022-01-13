@@ -24,6 +24,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
 	implementation("javax.persistence:javax.persistence-api:2.2")
+    implementation("junit:junit:4.13.1")
+	implementation("junit:junit:4.13.1")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
