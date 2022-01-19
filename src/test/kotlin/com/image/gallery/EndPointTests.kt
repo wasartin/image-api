@@ -16,15 +16,15 @@ import org.springframework.test.context.junit4.SpringRunner
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class EndPointTests {
-
-    @Autowired
-    lateinit var testRestTemplate: TestRestTemplate
-
-    @Test
-    fun testController() {
-        val result = testRestTemplate.getForEntity("/photo/all", String::class.java)
-        assertNotNull(result)
-        assertEquals(result.statusCode, HttpStatus.OK)
-        //assertEquals(result.body, "Hello string!")
-    }
+//
+//    @Autowired
+//    lateinit var testRestTemplate: TestRestTemplate
+//
+//    @Test
+//    fun testController() {
+//        val result = testRestTemplate.getForEntity("/photo/all", String::class.java)
+//        assertNotNull(result)
+//        assertEquals(result.statusCode, HttpStatus.OK)
+//        //assertEquals(result.body, "Hello string!")
+//    }
 }
