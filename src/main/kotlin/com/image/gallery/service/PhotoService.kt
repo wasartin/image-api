@@ -14,8 +14,6 @@ class PhotoService(
         return repo.findAll().toList()
     }
 
-    // add a photo
-
     // remove a photo
 
 }

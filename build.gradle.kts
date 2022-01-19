@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.postgresql:postgresql:42.3.1")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("javax.persistence:javax.persistence-api")
+	implementation("com.beust:klaxon:5.5")
 
 	implementation("junit:junit:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
