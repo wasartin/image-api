@@ -1,4 +1,4 @@
-package com.image.gallery.dto
+package com.image.gallery.model
 
 import java.awt.image.BufferedImage
 

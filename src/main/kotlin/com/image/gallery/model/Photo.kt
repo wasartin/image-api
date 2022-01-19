@@ -1,15 +1,13 @@
-package com.image.gallery.dao
+package com.image.gallery.model
 
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "photo")
 data class Photo (
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="pho_id")
     val photoId: Int,
 
