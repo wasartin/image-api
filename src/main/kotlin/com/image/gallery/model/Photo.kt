@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "photo")
 data class Photo (
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="pho_id")
     val photoId: Int,
 

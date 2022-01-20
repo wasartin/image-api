@@ -3,6 +3,7 @@ package com.image.gallery.Integration
 import com.beust.klaxon.Klaxon
 import junit.framework.TestCase.assertNotNull
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,30 +21,33 @@ class EndPointTest {
 
     @Test
     fun `given the database is live, when there is a request for all photos, then it will return them`() {
-        val result = testRestTemplate.getForEntity("/photo/all", String::class.java)
+        val result = testRestTemplate.getForEntity("/photos", String::class.java)
         assertNotNull(result)
         assertEquals(result.statusCode, HttpStatus.OK)
     }
 
-
-
     @Test
     fun `given the database is live, when there is a request for an addition, it succeeds`(){
-        val originalDBContents = testRestTemplate.getForEntity("/photo/all", String::class.java)
-        val originalDBSize = jsonToObjects(originalDBContents.body.toString())
-        // hit the add endpoint correctly
+        val originalDBContents = testRestTemplate.getForEntity("/photos", String::class.java)
+        val originalDBSize = jsonToObjects(originalDBContents.body.toString()).size
 
-        //testRestTemplate.postForEntity("/photo/add", """""")
+        val newPhoto = Photo(0,"www.google.com", "something", "2022-01-19T02:52:52.841689")
+        val result = testRestTemplate.postForEntity("/photos", newPhoto, String::class.java)
+        assertNotNull(result)
+        assertEquals(result.statusCode, HttpStatus.OK)
 
-        // get all DB contents again
+        val updatedDBContents = testRestTemplate.getForEntity("/photos", String::class.java)
+        val updatedDBSize = jsonToObjects(updatedDBContents.body.toString()).size
 
-        // ensure it is no bigger than the previous DB Contents
+        assertTrue(updatedDBSize > originalDBSize)
     }
 
     private fun jsonToObjects(json: String): List<Photo> {
         return Klaxon()
             .parseArray(json) ?: listOf()
     }
+
+
 }
 
 /**

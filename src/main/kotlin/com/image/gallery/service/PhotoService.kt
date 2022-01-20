@@ -14,6 +14,10 @@ class PhotoService(
         return repo.findAll().toList()
     }
 
+    fun add(newPhoto: Photo) : Photo {
+        return repo.save(newPhoto)
+    }
+
     // remove a photo
 
 }

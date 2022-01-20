@@ -1,17 +1,20 @@
 package com.image.gallery.controller
 
+import com.image.gallery.model.Photo
 import com.image.gallery.service.PhotoService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/photo")
+@RequestMapping("/photos")
 class PhotoController(
     @Autowired private val service: PhotoService
 ){
-    @GetMapping("/all")
+    @GetMapping()
     fun getAllPhotos() = service.getAll()
+
+    @PostMapping()
+    fun addPhoto(@RequestBody newPhoto : Photo): Photo {
+        return service.add(newPhoto)
+    }
 }
