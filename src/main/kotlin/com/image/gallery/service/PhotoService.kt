@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 class PhotoService(
     @Autowired private val repo: PhotoRepository
 ){
-    // get all photos
     fun getAll(): List<Photo> {
         return repo.findAll().toList()
     }
@@ -18,6 +17,8 @@ class PhotoService(
         return repo.save(newPhoto)
     }
 
-    // remove a photo
+    fun delete(photoId: Int) {
+        return repo.deleteById(photoId)
+    }
 
 }
