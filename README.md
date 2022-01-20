@@ -1,5 +1,6 @@
 # Gallery
 
 #### What?
-    - A backend for pi-frame
+    - The rest-api for pi-frame
 
+![image](resources/initDiagram.drawio.png)
