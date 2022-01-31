@@ -5,18 +5,18 @@ import com.image.gallery.model.dto.Image
 import java.time.LocalDateTime
 import com.image.gallery.repository.PhotoRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
+@Service
 class ImageService(
     @Autowired private val repo: PhotoRepository
 ){
 
-
-    fun delete(imageId: Int) {
-
-    }
+//    fun delete(imageId: Int) {
+//
+//    }
 
     fun add(newImage: Image): Image {
-
         val photo = createPhoto(newImage)
         val savedPhoto = repo.save(photo)
         newImage.id = savedPhoto.photoId
