@@ -1,6 +1,7 @@
-package com.image.gallery.Integration
+package com.image.gallery.integration
 
-import com.beust.klaxon.Klaxon
+import com.image.gallery.integration.extenstions.jsonToObject
+import com.image.gallery.integration.extenstions.jsonToObjects
 import junit.framework.TestCase.assertNotNull
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class EndPointTest {
+class PhotosEndPointTest {
 
     @Autowired
     lateinit var testRestTemplate: TestRestTemplate
@@ -31,7 +32,7 @@ class EndPointTest {
     @Test
     fun `given the database is live, when there is a request for an addition, it succeeds`(){
         val originalDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
-        val originalDBSize = jsonToObjects(originalDBContents.body.toString()).size
+        val originalDBSize = originalDBContents.jsonToObjects().size
 
         val newPhoto = Photo(0,"www.google.com", "something", "2022-01-19T02:52:52.841689")
         val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
@@ -39,33 +40,23 @@ class EndPointTest {
         assertEquals(result.statusCode, HttpStatus.OK)
 
         val updatedDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
-        val updatedDBSize = jsonToObjects(updatedDBContents.body.toString()).size
+        val updatedDBSize = updatedDBContents.jsonToObjects().size
 
         assertTrue(updatedDBSize > originalDBSize)
-    }
-
-    private fun jsonToObjects(json: String): List<Photo> {
-        return Klaxon()
-            .parseArray(json) ?: listOf()
-    }
-
-    private fun jsonToObject(json: String): Photo {
-        return Klaxon().parse(json) ?: Photo()
     }
 
     @Test
     fun `given the database is live, where there is a request for a delete, it succeeds`(){
         val newPhoto = Photo(0,"someFilePath", "something", "2022-01-19T02:52:52.841689")
         val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
-        val idToDelete = jsonToObject(result.body.toString()).photoId
-
+        val idToDelete = result.jsonToObject().photoId
         val originalDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
-        val originalDBSize = jsonToObjects(originalDBContents.body.toString()).size
+        val originalDBSize = originalDBContents.jsonToObjects().size
 
         testRestTemplate.delete("/v1/photos/{photoId}", idToDelete)
 
         val updatedDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
-        val updatedDBSize = jsonToObjects(updatedDBContents.body.toString()).size
+        val updatedDBSize = updatedDBContents.jsonToObjects().size
 
         assertTrue(updatedDBSize < originalDBSize)
     }
