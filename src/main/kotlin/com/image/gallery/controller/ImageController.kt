@@ -1,6 +1,5 @@
 package com.image.gallery.controller
 
-import com.image.gallery.model.dao.Photo
 import com.image.gallery.model.dto.Image
 import com.image.gallery.service.ImageService
 import org.springframework.beans.factory.annotation.Autowired

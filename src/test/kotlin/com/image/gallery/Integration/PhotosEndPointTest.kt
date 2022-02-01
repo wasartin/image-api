@@ -30,7 +30,7 @@ class PhotosEndPointTest {
     }
 
     @Test
-    fun `given the database is live, when there is a request for an addition, it succeeds`(){
+    fun `given the database is live, when there is a request for an add to Photo Endpoint, it succeeds`(){
         val originalDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
         val originalDBSize = originalDBContents.jsonToObjects().size
 
@@ -46,7 +46,7 @@ class PhotosEndPointTest {
     }
 
     @Test
-    fun `given the database is live, where there is a request for a delete, it succeeds`(){
+    fun `given the database is live, where there is a request for a delete to Photo Endpoint, it succeeds`(){
         val newPhoto = Photo(0,"someFilePath", "something", "2022-01-19T02:52:52.841689")
         val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
         val idToDelete = result.jsonToObject().photoId
