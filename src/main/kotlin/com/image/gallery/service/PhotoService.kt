@@ -1,6 +1,6 @@
 package com.image.gallery.service
 
-import com.image.gallery.model.Photo
+import com.image.gallery.model.dao.Photo
 import com.image.gallery.repository.PhotoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

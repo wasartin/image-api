@@ -1,4 +1,4 @@
-package com.image.gallery.model
+package com.image.gallery.model.dao
 
 import java.time.LocalDateTime
 import javax.persistence.*
