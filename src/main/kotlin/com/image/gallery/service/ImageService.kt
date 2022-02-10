@@ -17,6 +17,7 @@ class ImageService(
 //    }
 
     fun add(newImage: Image): Image {
+        println("service time")
         val photo = createPhoto(newImage)
         val savedPhoto = repo.save(photo)
         newImage.id = savedPhoto.photoId

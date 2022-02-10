@@ -2,6 +2,7 @@ package com.image.gallery.integration
 
 import com.image.gallery.integration.extenstions.jsonToObject
 import com.image.gallery.integration.extenstions.jsonToObjects
+import com.image.gallery.model.dao.Photo
 import junit.framework.TestCase.assertNotNull
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -13,6 +14,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
+import java.math.BigInteger
+import java.math.RoundingMode
+import java.time.LocalDateTime
 
 @Transactional
 @RunWith(SpringRunner::class)
@@ -34,7 +39,7 @@ class PhotosEndPointTest {
         val originalDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
         val originalDBSize = originalDBContents.jsonToObjects().size
 
-        val newPhoto = Photo(0,"www.google.com", "something", "2022-01-19T02:52:52.841689")
+        val newPhoto = Photo(0,"www.google.com", "something", LocalDateTime.parse("2022-01-19T02:52:52.841689"))
         val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
         assertNotNull(result)
         assertEquals(result.statusCode, HttpStatus.OK)
@@ -47,7 +52,7 @@ class PhotosEndPointTest {
 
     @Test
     fun `given the database is live, where there is a request for a delete to Photo Endpoint, it succeeds`(){
-        val newPhoto = Photo(0,"someFilePath", "something", "2022-01-19T02:52:52.841689")
+        val newPhoto = Photo(0,"someFilePath", "something", LocalDateTime.parse("2022-01-19T02:52:52.841689"))
         val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
         val idToDelete = result.jsonToObject().photoId
         val originalDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)

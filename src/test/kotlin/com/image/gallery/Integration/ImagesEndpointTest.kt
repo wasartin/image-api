@@ -1,7 +1,7 @@
 package com.image.gallery.integration
 
+import com.image.gallery.integration.extenstions.jsonToObject
 import com.image.gallery.integration.extenstions.jsonToObjects
-import junit.framework.TestCase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
@@ -11,6 +11,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.transaction.annotation.Transactional
+import java.io.File
+
+import java.math.BigDecimal
 
 @Transactional
 @RunWith(SpringRunner::class)
@@ -21,26 +24,35 @@ class ImagesEndpointTest {
     lateinit var testRestTemplate: TestRestTemplate
 
     @Test
-    fun `given the database is live, when there is a request for an add to the Images Endpoint, it succeeds and returns the photoId`(){
-        val originalDBContents = testRestTemplate.getForEntity("/v1/images", String::class.java)
-        val originalDBSize = originalDBContents.jsonToObjects().size
+    fun `should create a unique id for the image`(){
+        //given: a new image
 
-        //send a photo
+        val imageDTO = Image(
+            id = -100,
+            filePath= "",
+            contents = "",
+        )
+        //
 
-        //verify we received the photoId
+        //when: it is sent to the rest api
+        val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
+        val body = (result.body as String).jsonToObject()
 
-        //check to see if that photoId is in the Database
+        // then: we it should have an updated photoID
+        Assertions.assertEquals(result.statusCode, HttpStatus.OK)
+        Assertions.assertTrue(body.id != imageDTO.id)
+    }
 
-        //Profit
+    @Test
+    fun `should work`(){
+        val photoByteArray = File("C:\\Users\\Will\\Develop\\workshop\\piFrame\\gallery\\src\\test\\resources\\static\\posters\\theThing_1982.jpg").readBytes()
 
-//        val newPhoto = Photo(0,"www.google.com", "something", "2022-01-19T02:52:52.841689")
-//        val result = testRestTemplate.postForEntity("/v1/photos", newPhoto, String::class.java)
-//        TestCase.assertNotNull(result)
-//        Assertions.assertEquals(result.statusCode, HttpStatus.OK)
-//
-//        val updatedDBContents = testRestTemplate.getForEntity("/v1/photos", String::class.java)
-//        val updatedDBSize = updatedDBContents.jsonToObjects().size
-//
-//        Assertions.assertTrue(updatedDBSize > originalDBSize)
     }
 }
+
+class Image(
+    var id: Int = -100,
+    var filePath: String = "",
+    var contents: String = "",
+)
+

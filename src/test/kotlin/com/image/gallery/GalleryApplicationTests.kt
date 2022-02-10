@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class GalleryApplicationTests {
 
 	@Test
-	fun contextLoads() {
+	fun `the context loads, an auto generated smoke test by Spring`() {
 	}
 
 }
