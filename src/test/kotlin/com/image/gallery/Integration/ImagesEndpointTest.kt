@@ -42,12 +42,6 @@ class ImagesEndpointTest {
         Assertions.assertEquals(result.statusCode, HttpStatus.OK)
         Assertions.assertTrue(body.id != imageDTO.id)
     }
-
-    @Test
-    fun `should work`(){
-        val photoByteArray = File("C:\\Users\\Will\\Develop\\workshop\\piFrame\\gallery\\src\\test\\resources\\static\\posters\\theThing_1982.jpg").readBytes()
-
-    }
 }
 
 class Image(
