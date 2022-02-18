@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.io.File
 
 import java.math.BigDecimal
+import java.util.*
 
 @Transactional
 @RunWith(SpringRunner::class)
@@ -32,7 +33,6 @@ class ImagesEndpointTest {
             filePath= "",
             contents = "",
         )
-        //
 
         //when: it is sent to the rest api
         val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
@@ -42,6 +42,38 @@ class ImagesEndpointTest {
         Assertions.assertEquals(result.statusCode, HttpStatus.OK)
         Assertions.assertTrue(body.id != imageDTO.id)
     }
+
+    @Test
+    fun `should save image to redis cache`(){
+        //given: a new image
+
+        //create image, get the bytes
+        val imageContents = File("/Users/wsartin/dev/workshop/piFrame/pi-gallery/src/test/resources/static/posters/theThing_1982.jpg")
+        val imageDTO = Image(
+            id = -100,
+            filePath= "",
+            contents = "imageContents.readBytes()",
+        )
+
+        //when: it is sent to the rest api
+        val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
+        val body = (result.body as String).jsonToObject()
+
+        // then: we it should have an updated photoID
+        Assertions.assertEquals(result.statusCode, HttpStatus.OK)
+        Assertions.assertTrue(body.id != imageDTO.id)
+    }
+
+
+
+    fun String.decodeFromBase64(): ByteArray {
+        return Base64.getDecoder().decode(this)
+    }
+
+    fun ByteArray.encodeToBase64(): String {
+        return Base64.getEncoder().encodeToString(this)
+    }
+
 }
 
 class Image(

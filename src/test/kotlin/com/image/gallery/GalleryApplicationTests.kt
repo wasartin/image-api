@@ -9,5 +9,4 @@ class GalleryApplicationTests {
 	@Test
 	fun `the context loads, an auto generated smoke test by Spring`() {
 	}
-
 }
