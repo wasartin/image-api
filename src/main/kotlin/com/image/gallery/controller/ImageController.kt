@@ -16,8 +16,4 @@ class ImageController(
         return service.add(newImage)
     }
 
-//    @DeleteMapping("/{imageId}")
-//    fun deletePhotoById(@PathVariable imageId : Int) {
-//        return service.delete(imageId)
-//    }
 }

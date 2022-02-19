@@ -32,8 +32,6 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.12.2")
 	testImplementation("com.ninja-squad:springmockk:3.1.0") // Mockk recommends this for mocking spring beans
-
-
 }
 
 tasks.withType<KotlinCompile> {

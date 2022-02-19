@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.io.File
 
 import java.math.BigDecimal
+import java.util.*
 
 @Transactional
 @RunWith(SpringRunner::class)
@@ -26,13 +27,11 @@ class ImagesEndpointTest {
     @Test
     fun `should create a unique id for the image`(){
         //given: a new image
-
         val imageDTO = Image(
             id = -100,
             filePath= "",
-            contents = "",
+            contentsAsBase64 = "",
         )
-        //
 
         //when: it is sent to the rest api
         val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
@@ -42,11 +41,40 @@ class ImagesEndpointTest {
         Assertions.assertEquals(result.statusCode, HttpStatus.OK)
         Assertions.assertTrue(body.id != imageDTO.id)
     }
+
+    @Test
+    fun `should save image`(){
+
+        val imageContents = File("/Users/wsartin/dev/workshop/piFrame/pi-gallery/src/test/resources/static/posters/theThing_1982.jpg")
+            .readBytes()
+
+        val encoded64 = imageContents.encodeToBase64()
+
+        //given: a new image
+        val imageDTO = Image(
+            id = -100,
+            filePath= "",
+            contentsAsBase64 = encoded64,
+        )
+
+        //when: it is sent to the rest api
+        val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
+        val body = (result.body as String).jsonToObject()
+
+        // then: we it should have an updated photoID
+        Assertions.assertEquals(result.statusCode, HttpStatus.OK)
+        Assertions.assertTrue(body.id != imageDTO.id)
+    }
+
+    fun ByteArray.encodeToBase64(): String {
+        return Base64.getEncoder().encodeToString(this)
+    }
+
 }
 
 class Image(
     var id: Int = -100,
     var filePath: String = "",
-    var contents: String = "",
+    var contentsAsBase64: String = "",
 )
 
