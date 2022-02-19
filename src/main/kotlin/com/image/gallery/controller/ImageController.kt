@@ -12,7 +12,6 @@ class ImageController(
 ){
     @PostMapping()
     fun addImage(@RequestBody newImage : Image): Image {
-        println("Hit the endpoint with: $newImage")
         return service.add(newImage)
     }
 

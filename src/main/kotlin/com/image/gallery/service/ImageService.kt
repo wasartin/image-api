@@ -16,18 +16,18 @@ class ImageService(
     @Value("\${image.directory}") private val imageDirectory: String
 ){
     fun add(newImage: Image): Image {
-        println("service time")
         val photo = createPhoto(newImage)
         val savedPhoto = repo.save(photo)
         newImage.id = savedPhoto.photoId
+        saveImage(savedPhoto.title, newImage.contentsAsBase64)
         return newImage
     }
 
-    private fun savePhoto(name: String, image: Image){
+    private fun saveImage(name: String, imageContents: String){
         val folderDir = File(imageDirectory)
         val imageFile = File(folderDir, name)
         imageFile.parentFile.mkdirs()
-        imageFile.writeBytes(image.contentsAsBase64.fromBase64ToByteArray())
+        imageFile.writeBytes(imageContents.fromBase64ToByteArray())
     }
 
     private fun String.fromBase64ToByteArray(): ByteArray {
@@ -44,5 +44,4 @@ class ImageService(
             created = LocalDateTime.now()
         )
     }
-
 }
