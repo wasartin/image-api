@@ -12,12 +12,12 @@ class ImageController(
 ){
     @PostMapping()
     fun addImage(@RequestBody newImage : Image): Image {
-        println("Hit the endpoint with: $newImage")
         return service.add(newImage)
     }
 
-//    @DeleteMapping("/{imageId}")
-//    fun deletePhotoById(@PathVariable imageId : Int) {
-//        return service.delete(imageId)
-//    }
+    @DeleteMapping("/{imageId}")
+    fun deleteImage(@PathVariable imageId: Int) {
+        service.delete(imageId)
+    }
+
 }
