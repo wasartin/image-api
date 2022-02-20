@@ -39,7 +39,7 @@ class ImagesEndpointTest(
     @Test
     fun `should create a unique id for the image`(){
         //given: a new image
-        val imageDTO = defaultImage()
+        val imageDTO = createDefaultImage()
 
         //when: it is sent to the rest api
         val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
@@ -53,7 +53,7 @@ class ImagesEndpointTest(
     @Test
     fun `should save image`(){
         //given: a new image
-        val imageDTO = defaultImage()
+        val imageDTO = createDefaultImage()
 
         //when: it is sent to the rest api
         val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
@@ -67,24 +67,23 @@ class ImagesEndpointTest(
     @Test
     fun `should delete image`(){
         //given the file already exists on the machine
-        val imageDTO = defaultImage()
+        val imageDTO = createDefaultImage()
         val result = testRestTemplate.postForEntity("/v1/images", imageDTO, String::class.java)
         val id = (result.body as String).jsonToObject().id
 
         //when: a request is made to delete the image
         testRestTemplate.delete("/v1/images/$id")
+
         // then: the image should no longer exist
         val nonExistentFile = File(File(tempDirectory), "theThing_1982.jpg").exists()
         Assertions.assertFalse(nonExistentFile)
     }
 
-
     private fun ByteArray.encodeToBase64(): String {
         return Base64.getEncoder().encodeToString(this)
     }
 
-
-    private fun defaultImage(): Image {
+    private fun createDefaultImage(): Image {
         val filePath = "/Users/wsartin/dev/workshop/piFrame/pi-gallery/src/test/resources/static/posters/theThing_1982.jpg"
         val imageContents = File(filePath).readBytes()
         val encoded64 = imageContents.encodeToBase64()
