@@ -4,7 +4,7 @@ import com.image.gallery.model.dto.Image
 import com.image.gallery.service.ImageService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-
+// TODO: Delete
 @RestController
 @RequestMapping("/v1/images")
 class ImageController(
