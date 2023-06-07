@@ -7,7 +7,6 @@ import com.image.gallery.repository.PhotoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.io.File
 import java.util.*
 
@@ -44,6 +43,8 @@ class ImageService(
             photoId = -100,
             filePath = filePath,
             title = name,
+            author = "",
+            tags = arrayOf(String()),
             created = LocalDateTime.now()
         )
     }
