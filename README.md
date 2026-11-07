@@ -11,12 +11,13 @@ database, and tells the display which photo to show.
 
 ## Run it
 
-Needs Python 3.10+, Docker and GNU make. Run these from the project root (the
-folder above `gallery/`):
+Needs Python 3.10+, Docker and GNU make, with the
+[photo-db](https://github.com/wasartin/photo-db) repo cloned next to this one as
+`../photoDB` (or pass `DB_DIR=/path/to/photoDB`). From this folder:
 
 ```sh
-cp gallery/.env.example gallery/.env  # optional: only if you need non-default settings
-make start                            # http://localhost:9009
+cp .env.example .env  # optional: only if you need non-default settings
+make start            # http://localhost:9009
 ```
 
 `make start` creates `.venv` and installs dependencies if needed, starts the
@@ -37,8 +38,6 @@ python -m venv .venv
 ```
 
 ## Tests
-
-From the project root:
 
 ```sh
 make gallery-test
