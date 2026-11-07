@@ -38,3 +38,10 @@ out/
 
 ### MISC ###
 notesToSelf.md
+### Python ###
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+images/
